@@ -15,10 +15,17 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Prepare FTP Hostname
+        id: prep
+        run: |
+          RAW_SERVER="${{ secrets.FTP_SERVER_2 || secrets.FTP_SERVER || '195.35.44.52' }}"
+          CLEAN_SERVER=$(echo "$RAW_SERVER" | sed -E 's|^[a-zA-Z]+://||; s|/*$||')
+          echo "host=$CLEAN_SERVER" >> $GITHUB_OUTPUT
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER_2 || secrets.FTP_SERVER }}
+          server: ${{ steps.prep.outputs.host }}
           username: ${{ secrets.FTP_USERNAME_2 || secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD_2 || secrets.FTP_PASSWORD }}
           local-dir: ./
