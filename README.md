@@ -1,1 +1,1 @@
-# maiditeasy.co.in
+# maiditeasy.in

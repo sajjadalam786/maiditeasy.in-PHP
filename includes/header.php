@@ -14,7 +14,7 @@ if (!isset($page_description)) {
     $page_description = "Book trusted and verified maids, cooks, drivers, babysitters, and elderly care services with Maid It Easy. Professional, reliable, and hassle-free domestic help.";
 }
 if (!isset($canonical_url)) {
-    $canonical_url = "https://maiditeasy.co.in" . $_SERVER['REQUEST_URI'];
+    $canonical_url = "https://maiditeasy.in" . $_SERVER['REQUEST_URI'];
 }
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
@@ -71,11 +71,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
         "@graph": [
           {
             "@type": "LocalBusiness",
-            "@id": "https://maiditeasy.co.in/#organization",
+            "@id": "https://maiditeasy.in/#organization",
             "name": "Maid It Easy",
-            "image": "https://maiditeasy.co.in/assets/img/logo/logo-blue.png",
-            "logo": "https://maiditeasy.co.in/assets/img/logo/logo-blue.png",
-            "url": "https://maiditeasy.co.in/",
+            "image": "https://maiditeasy.in/assets/img/logo/logo-blue.png",
+            "logo": "https://maiditeasy.in/assets/img/logo/logo-blue.png",
+            "url": "https://maiditeasy.in/",
             "telephone": "+91 9866769832",
             "priceRange": "₹₹",
             "address": {
@@ -98,12 +98,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
           },
           {
             "@type": "WebSite",
-            "@id": "https://maiditeasy.co.in/#website",
-            "url": "https://maiditeasy.co.in/",
+            "@id": "https://maiditeasy.in/#website",
+            "url": "https://maiditeasy.in/",
             "name": "Maid It Easy",
             "description": "Professional Domestic Helper Aggregation Agency",
             "publisher": {
-              "@id": "https://maiditeasy.co.in/#organization"
+              "@id": "https://maiditeasy.in/#organization"
             }
           }
         ]

@@ -1,7 +1,7 @@
 <?php
 $page_title = "Maid It Easy | Best & Number One Maid Agency in India";
 $page_description = "Book trusted and verified maids, cooks, drivers, babysitters, and elderly care services with Maid It Easy. Professional, reliable, and hassle-free domestic help.";
-$canonical_url = "https://maiditeasy.co.in/index.php";
+$canonical_url = "https://maiditeasy.in/index.php";
 include 'includes/header.php';
 ?>
       <main>
