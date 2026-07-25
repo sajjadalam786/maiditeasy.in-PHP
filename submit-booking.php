@@ -1,12 +1,12 @@
 <?php
 /*
   GOOGLE SHEETS INTEGRATION GUIDE:
-  1. Open your Google Sheet: https://docs.google.com/spreadsheets/d/1c1LYiTW0yvioMTV1nt2I_xE_GfN1a2PNAtwsqRt0PKE/edit
+  1. Open your Google Sheet: https://docs.google.com/spreadsheets/d/1knPoIfQIcUWNXdbm9Qs6WId0Jxk6LRXi93zOrhSuiS4/edit
   2. Click Extensions > Apps Script.
   3. Delete any default code and paste this script:
 
      function doPost(e) {
-       var sheet = SpreadsheetApp.openById("1c1LYiTW0yvioMTV1nt2I_xE_GfN1a2PNAtwsqRt0PKE").getActiveSheet();
+       var sheet = SpreadsheetApp.openById("1knPoIfQIcUWNXdbm9Qs6WId0Jxk6LRXi93zOrhSuiS4").getActiveSheet();
        var rowData = [];
        rowData.push(new Date()); // Timestamp
        rowData.push(e.parameter.name);
