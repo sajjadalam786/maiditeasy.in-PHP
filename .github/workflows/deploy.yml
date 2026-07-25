@@ -37,7 +37,6 @@ jobs:
             **/.git*
             **/.git*/**
             .env
-            config.env
             *.md
             .agents/**
             .github/**

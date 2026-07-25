@@ -32,21 +32,37 @@
 */
 
 function get_env_var($key, $default = '') {
-    $env_file = __DIR__ . '/.env';
-    if (!file_exists($env_file)) {
-        $env_file = __DIR__ . '/config.env';
-    }
-    if (file_exists($env_file)) {
-        $lines = file($env_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $val = '';
+    $config_file = __DIR__ . '/config.env';
+    if (file_exists($config_file)) {
+        $lines = file($config_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         foreach ($lines as $line) {
-            if (strpos(trim($line), '#') === 0) continue;
+            $line = trim($line);
+            if (empty($line) || strpos($line, '#') === 0) continue;
             if (strpos($line, '=') !== false) {
-                list($name, $value) = explode('=', $line, 2);
-                if (trim($name) == $key && !empty(trim($value))) {
-                    return trim($value);
+                list($name, $v) = explode('=', $line, 2);
+                if (trim($name) === $key && !empty(trim($v))) {
+                    $val = trim($v);
                 }
             }
         }
+    }
+    $env_file = __DIR__ . '/.env';
+    if (file_exists($env_file)) {
+        $lines = file($env_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if (empty($line) || strpos($line, '#') === 0) continue;
+            if (strpos($line, '=') !== false) {
+                list($name, $v) = explode('=', $line, 2);
+                if (trim($name) === $key && !empty(trim($v))) {
+                    $val = trim($v);
+                }
+            }
+        }
+    }
+    if (!empty($val)) {
+        return $val;
     }
     if ($key === 'GOOGLE_SHEET_WEBHOOK_URL') {
         return 'https://script.google.com/macros/s/AKfycbyVJrWK6xbv2BONHiob2PJ-ijspDU8pQbgys11LurIjvOaqYaFe4EJJiyPndU-02_KrOw/exec';
@@ -90,11 +106,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email_headers = "From: Maid It Easy Booking <no-reply@maiditeasy.in>\r\n";
     $email_headers .= "Reply-To: $email\r\n";
     $email_headers .= "X-Mailer: PHP/" . phpversion();
-    mail($recipient, $subject, $email_content, $email_headers);
+    @mail($recipient, $subject, $email_content, $email_headers, "-f no-reply@maiditeasy.in");
     
     // 2. Trigger Webhook API
     $webhook_url = get_env_var('BOOKING_WEBHOOK_URL');
-    if (!empty($webhook_url) && filter_var($webhook_url, FILTER_VALIDATE_URL)) {
+    if (!empty($webhook_url) && filter_var($webhook_url, FILTER_VALIDATE_URL) && strpos($webhook_url, 'example.com') === false) {
         $payload = json_encode([
             'event' => 'new_booking',
             'timestamp' => date('c'),
@@ -115,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
