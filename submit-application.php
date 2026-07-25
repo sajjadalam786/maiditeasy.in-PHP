@@ -42,25 +42,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // 1. Send Email Notification
-    $recipient = get_env_var('RECIPIENT_EMAIL', 'wholesalehouse2016@gmail.com, maiditeasy999@gmail.com');
-    $subject = "New Job Application: $role - $name";
+    $recipient_str = get_env_var('RECIPIENT_EMAIL', 'wholesalehouse2016@gmail.com, maiditeasy999@gmail.com');
+    $recipients = array_filter(array_map('trim', explode(',', $recipient_str)));
     
-    $email_content = "Name: $name\n";
-    $email_content .= "Phone: $phone\n";
-    $email_content .= "Alternate Phone: $alternate_phone\n";
-    $email_content .= "City: $city\n";
-    $email_content .= "Age: $age\n";
-    $email_content .= "Gender: $gender\n";
-    $email_content .= "Role Applied For: $role\n";
-    $email_content .= "Experience: $experience\n";
-    $email_content .= "Expected Salary: $salary\n";
-    $email_content .= "Work Type Preference: $work_type\n";
-    $email_content .= "Preferred Work Area/Address: $location\n\n";
-    $email_content .= "Work History/Remarks:\n$message\n";
+    $subject = "New Job Application: " . $role . " - " . $name;
     
-    $email_headers = "From: Maid It Easy Careers <no-reply@maiditeasy.in>\r\n";
-    $email_headers .= "X-Mailer: PHP/" . phpversion();
-    mail($recipient, $subject, $email_content, $email_headers);
+    $email_body = "<html><body style='font-family: Arial, sans-serif; color: #333;'>";
+    $email_body .= "<h2 style='color:#0e0035; border-bottom: 2px solid #ff890c; padding-bottom: 8px;'>New Job Application</h2>";
+    $email_body .= "<table border='1' cellpadding='8' cellspacing='0' style='border-collapse:collapse; width:100%; max-width:600px; border-color: #ddd;'>";
+    $email_body .= "<tr><td style='background:#f8f9fa; font-weight:bold; width:35%;'>Full Name:</td><td>" . htmlspecialchars($name) . "</td></tr>";
+    $email_body .= "<tr><td style='background:#f8f9fa; font-weight:bold;'>Phone:</td><td>" . htmlspecialchars($phone) . "</td></tr>";
+    $email_body .= "<tr><td style='background:#f8f9fa; font-weight:bold;'>Alternate Phone:</td><td>" . htmlspecialchars($alternate_phone) . "</td></tr>";
+    $email_body .= "<tr><td style='background:#f8f9fa; font-weight:bold;'>City:</td><td>" . htmlspecialchars($city) . "</td></tr>";
+    $email_body .= "<tr><td style='background:#f8f9fa; font-weight:bold;'>Age:</td><td>" . htmlspecialchars($age) . "</td></tr>";
+    $email_body .= "<tr><td style='background:#f8f9fa; font-weight:bold;'>Gender:</td><td>" . htmlspecialchars($gender) . "</td></tr>";
+    $email_body .= "<tr><td style='background:#f8f9fa; font-weight:bold;'>Role Applied For:</td><td>" . htmlspecialchars($role) . "</td></tr>";
+    $email_body .= "<tr><td style='background:#f8f9fa; font-weight:bold;'>Experience:</td><td>" . htmlspecialchars($experience) . "</td></tr>";
+    $email_body .= "<tr><td style='background:#f8f9fa; font-weight:bold;'>Expected Salary:</td><td>" . htmlspecialchars($salary) . "</td></tr>";
+    $email_body .= "<tr><td style='background:#f8f9fa; font-weight:bold;'>Work Type:</td><td>" . htmlspecialchars($work_type) . "</td></tr>";
+    $email_body .= "<tr><td style='background:#f8f9fa; font-weight:bold;'>Preferred Location:</td><td>" . htmlspecialchars($location) . "</td></tr>";
+    $email_body .= "<tr><td style='background:#f8f9fa; font-weight:bold;'>Remarks:</td><td>" . nl2br(htmlspecialchars($message)) . "</td></tr>";
+    $email_body .= "</table></body></html>";
+    
+    $headers  = "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $headers .= "From: Maid It Easy Careers <no-reply@maiditeasy.in>\r\n";
+    $headers .= "X-Mailer: PHP/" . phpversion();
+    
+    foreach ($recipients as $to_email) {
+        if (filter_var($to_email, FILTER_VALIDATE_EMAIL)) {
+            @mail($to_email, $subject, $email_body, $headers, "-fno-reply@maiditeasy.in");
+        }
+    }
     
     // 2. Trigger Webhook API
     $webhook_url = get_env_var('APPLICATION_WEBHOOK_URL');
