@@ -32,18 +32,27 @@
 */
 
 function get_env_var($key, $default = '') {
-    $env_file = __DIR__ . '/config.env';
+    $env_file = __DIR__ . '/.env';
+    if (!file_exists($env_file)) {
+        $env_file = __DIR__ . '/config.env';
+    }
     if (file_exists($env_file)) {
         $lines = file($env_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         foreach ($lines as $line) {
             if (strpos(trim($line), '#') === 0) continue;
             if (strpos($line, '=') !== false) {
                 list($name, $value) = explode('=', $line, 2);
-                if (trim($name) == $key) {
+                if (trim($name) == $key && !empty(trim($value))) {
                     return trim($value);
                 }
             }
         }
+    }
+    if ($key === 'GOOGLE_SHEET_WEBHOOK_URL') {
+        return 'https://script.google.com/macros/s/AKfycbyVJrWK6xbv2BONHiob2PJ-ijspDU8pQbgys11LurIjvOaqYaFe4EJJiyPndU-02_KrOw/exec';
+    }
+    if ($key === 'RECIPIENT_EMAIL') {
+        return 'wholesalehouse2016@gmail.com, maiditeasy999@gmail.com';
     }
     return $default;
 }
@@ -65,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // 1. Send Email Notification
-    $recipient = get_env_var('RECIPIENT_EMAIL');
+    $recipient = get_env_var('RECIPIENT_EMAIL', 'wholesalehouse2016@gmail.com, maiditeasy999@gmail.com');
     $subject = "New Maid It Easy Booking Request from $name";
     
     $email_content = "Name: $name\n";
@@ -78,7 +87,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email_content .= "How did they hear: $referrer\n\n";
     $email_content .= "Message/Remarks:\n$message\n";
     
-    $email_headers = "From: Maid It Easy Booking <no-reply@maiditeasy.in>";
+    $email_headers = "From: Maid It Easy Booking <no-reply@maiditeasy.in>\r\n";
+    $email_headers .= "Reply-To: $email\r\n";
+    $email_headers .= "X-Mailer: PHP/" . phpversion();
     mail($recipient, $subject, $email_content, $email_headers);
     
     // 2. Trigger Webhook API
@@ -102,6 +113,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $ch = curl_init($webhook_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -113,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // 3. Forward to Google Sheets Web App
-    $sheet_url = get_env_var('GOOGLE_SHEET_WEBHOOK_URL');
+    $sheet_url = get_env_var('GOOGLE_SHEET_WEBHOOK_URL', 'https://script.google.com/macros/s/AKfycbyVJrWK6xbv2BONHiob2PJ-ijspDU8pQbgys11LurIjvOaqYaFe4EJJiyPndU-02_KrOw/exec');
     if (!empty($sheet_url) && filter_var($sheet_url, FILTER_VALIDATE_URL)) {
         $post_fields = [
             'name' => $name,
@@ -129,6 +143,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $ch = curl_init($sheet_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Required for Google script redirect
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_fields));
         curl_exec($ch);

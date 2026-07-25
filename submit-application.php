@@ -1,17 +1,23 @@
 <?php
 function get_env_var($key, $default = '') {
-    $env_file = __DIR__ . '/config.env';
+    $env_file = __DIR__ . '/.env';
+    if (!file_exists($env_file)) {
+        $env_file = __DIR__ . '/config.env';
+    }
     if (file_exists($env_file)) {
         $lines = file($env_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         foreach ($lines as $line) {
             if (strpos(trim($line), '#') === 0) continue;
             if (strpos($line, '=') !== false) {
                 list($name, $value) = explode('=', $line, 2);
-                if (trim($name) == $key) {
+                if (trim($name) == $key && !empty(trim($value))) {
                     return trim($value);
                 }
             }
         }
+    }
+    if ($key === 'RECIPIENT_EMAIL') {
+        return 'wholesalehouse2016@gmail.com, maiditeasy999@gmail.com';
     }
     return $default;
 }
@@ -36,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // 1. Send Email Notification
-    $recipient = get_env_var('RECIPIENT_EMAIL');
+    $recipient = get_env_var('RECIPIENT_EMAIL', 'wholesalehouse2016@gmail.com, maiditeasy999@gmail.com');
     $subject = "New Job Application: $role - $name";
     
     $email_content = "Name: $name\n";
@@ -52,7 +58,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email_content .= "Preferred Work Area/Address: $location\n\n";
     $email_content .= "Work History/Remarks:\n$message\n";
     
-    $email_headers = "From: Maid It Easy Careers <no-reply@maiditeasy.in>";
+    $email_headers = "From: Maid It Easy Careers <no-reply@maiditeasy.in>\r\n";
+    $email_headers .= "X-Mailer: PHP/" . phpversion();
     mail($recipient, $subject, $email_content, $email_headers);
     
     // 2. Trigger Webhook API
@@ -79,6 +86,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $ch = curl_init($webhook_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
