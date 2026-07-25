@@ -184,8 +184,22 @@
             }
         });
 
-        $(document).on("submit", ".lead-short-form", function(){
-            sessionStorage.setItem("popupFilled", "true");
+        // Prevent duplicate form submission & add loader button across all forms
+        $(document).on("submit", "form", function(e){
+            var $form = $(this);
+            if ($form.data("submitting") === true) {
+                e.preventDefault();
+                return false;
+            }
+            $form.data("submitting", true);
+            var $btn = $form.find('button[type="submit"], input[type="submit"], .btn');
+            if ($btn.length) {
+                $btn.prop("disabled", true).css({"opacity": "0.75", "cursor": "not-allowed", "pointer-events": "none"});
+                $btn.html('<i class="fas fa-spinner fa-spin"></i> Submitting...');
+            }
+            if ($form.hasClass("lead-short-form")) {
+                sessionStorage.setItem("popupFilled", "true");
+            }
         });
     });
     </script>
