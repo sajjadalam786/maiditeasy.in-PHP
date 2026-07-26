@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://maiditeasy.in/sitemap.xml
+Sitemap: https://maiditeasy.in/Policies/sitemap.xml

@@ -54,8 +54,18 @@ $current_page = basename($_SERVER['PHP_SELF']);
       <meta http-equiv="x-ua-compatible" content="ie=edge" />
       <title><?php echo htmlspecialchars($page_title); ?></title>
       <meta name="description" content="<?php echo htmlspecialchars($page_description); ?>" />
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta name="googlebot" content="index, follow" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
       <link class="canonical-link" rel="canonical" href="<?php echo htmlspecialchars($canonical_url); ?>" />
+
+      <!-- Open Graph / Social SEO Meta Tags -->
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Maid It Easy" />
+      <meta property="og:title" content="<?php echo htmlspecialchars($page_title); ?>" />
+      <meta property="og:description" content="<?php echo htmlspecialchars($page_description); ?>" />
+      <meta property="og:url" content="<?php echo htmlspecialchars($canonical_url); ?>" />
+      <meta property="og:image" content="https://maiditeasy.in/assets/img/logo/logo-blue.png" />
 
       <!-- Typography Font -->
       <link rel="preconnect" href="https://fonts.googleapis.com">
