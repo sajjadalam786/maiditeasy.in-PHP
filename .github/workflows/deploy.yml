@@ -35,6 +35,7 @@ jobs:
           protocol: ${{ secrets.FTP_PROTOCOL || 'ftps' }}
           port: ${{ secrets.FTP_PORT || 21 }}
           security: loose
+          dangerous-clean-slate: true
           exclude: |
             .git*
             .git*/**
