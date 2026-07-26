@@ -20,6 +20,12 @@ if ($script_name == 'maid-service.php') {
 ?>
 <div style="background-color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee; width: 100%;">
     <form action="<?php echo $root_prefix; ?>submit-booking.php" method="POST">
+        <!-- Service vs Job Toggle Buttons -->
+        <div style="display: flex; background: #f0f2f5; padding: 4px; border-radius: 30px; margin-bottom: 20px; gap: 4px; border: 1px solid #e0e0e0;">
+            <button type="button" style="flex: 1; padding: 10px 8px; border: none; border-radius: 25px; font-size: 12px; font-weight: 700; cursor: pointer; background: #ff890c; color: #fff; text-align: center; line-height: 1.2;">Book Services Only (No Jobs)</button>
+            <button type="button" onclick="location.href='<?php echo $root_prefix; ?>pages/career.php';" style="flex: 1; padding: 10px 8px; border: none; border-radius: 25px; font-size: 12px; font-weight: 700; cursor: pointer; background: transparent; color: #555; text-align: center; line-height: 1.2;">Looking for Job</button>
+        </div>
+
         <div style="background-color: #fff9e6; color: #856404; padding: 12px 15px; border-radius: 6px; margin-bottom: 20px; font-weight: bold; border: 1px solid #ffeeba; font-size: 14px; text-align: center; line-height: 1.4;">
             Instant Maids Requirement Not Available - Only Long Terms
         </div>
@@ -79,7 +85,7 @@ if ($script_name == 'maid-service.php') {
         
         <div class="form-group mb-3">
             <label style="font-weight: 600; margin-bottom: 5px; font-size: 14px; display: block;">Comment or Remark</label>
-            <textarea name="message" class="form-control" rows="3" placeholder="Any specific requirements..." style="border-radius: 6px; font-size: 14px; border: 1px solid #ced4da; width: 100%; padding: 8px 12px;"></textarea>
+            <textarea name="message" class="form-control" rows="3" placeholder="What do you actually need? Maid, Nanny, cooks, Driver, etc,etc" style="border-radius: 6px; font-size: 14px; border: 1px solid #ced4da; width: 100%; padding: 8px 12px;"></textarea>
         </div>
         
         <div class="form-group mb-3" style="display: flex; align-items: flex-start; gap: 8px;">

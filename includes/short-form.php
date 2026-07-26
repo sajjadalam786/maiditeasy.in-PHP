@@ -56,6 +56,12 @@ $form_uniq = uniqid('sf_');
 }
 </style>
 <form class="lead-short-form lead-short-form-box" action="<?php echo $root_prefix; ?>submit-booking.php" method="POST">
+    <!-- Service vs Job Toggle Buttons -->
+    <div style="display: flex; background: #f0f2f5; padding: 3px; border-radius: 25px; margin-bottom: 12px; gap: 3px; border: 1px solid #e0e0e0;">
+        <button type="button" style="flex: 1; padding: 7px 4px; border: none; border-radius: 20px; font-size: 10px; font-weight: 700; cursor: pointer; background: #ff890c; color: #fff; text-align: center; line-height: 1.2;">Book Services Only (No Jobs)</button>
+        <button type="button" onclick="location.href='<?php echo $root_prefix; ?>pages/career.php';" style="flex: 1; padding: 7px 4px; border: none; border-radius: 20px; font-size: 10px; font-weight: 700; cursor: pointer; background: transparent; color: #555; text-align: center; line-height: 1.2;">Looking for Job</button>
+    </div>
+
     <div class="sf-field">
         <label>Full Name *</label>
         <input type="text" name="name" required placeholder="Enter your name">
@@ -83,6 +89,11 @@ $form_uniq = uniqid('sf_');
             <option value="Elderly Care">Elderly Care</option>
             <option value="Watchman/Security Guard">Watchman/ Security Guard</option>
         </select>
+    </div>
+    
+    <div class="sf-field">
+        <label>Comment or Remark</label>
+        <textarea name="message" rows="2" placeholder="What do you actually need? Maid, Nanny, cooks, Driver, etc,etc" style="width: 100%; padding: 6px 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 12px; outline: none; background: #fff;"></textarea>
     </div>
     
     <div style="display: flex; align-items: flex-start; gap: 6px; margin-bottom: 8px; margin-top: 4px;">

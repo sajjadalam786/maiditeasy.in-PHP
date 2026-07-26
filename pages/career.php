@@ -2,6 +2,7 @@
 $page_title = "Join Our Team | Careers at Maid It Easy";
 $page_description = "Careers at Maid It Easy. We are hiring professional housekeeping staff, cooks, babysitters, nanny professionals, and security guard personnel.";
 $canonical_url = "https://maiditeasy.in/pages/career.php";
+$additional_head = '<meta name="robots" content="noindex, nofollow, noarchive" />';
 include '../includes/header.php';
 ?>
     <main>
@@ -60,6 +61,11 @@ include '../includes/header.php';
                             <h3 style="font-size: 22px; font-weight: bold; color: #0e0035; margin-bottom: 20px; text-align: center;">Helper Registration Form</h3>
                             
                             <form action="../submit-application.php" method="POST">
+                                <!-- Service vs Job Toggle Buttons -->
+                                <div style="display: flex; background: #f0f2f5; padding: 4px; border-radius: 30px; margin-bottom: 20px; gap: 4px; border: 1px solid #e0e0e0;">
+                                    <button type="button" onclick="location.href='../pages/contact.php';" style="flex: 1; padding: 10px 8px; border: none; border-radius: 25px; font-size: 12px; font-weight: 700; cursor: pointer; background: transparent; color: #555; text-align: center; line-height: 1.2;">Book Services Only (No Jobs)</button>
+                                    <button type="button" style="flex: 1; padding: 10px 8px; border: none; border-radius: 25px; font-size: 12px; font-weight: 700; cursor: pointer; background: #ff890c; color: #fff; text-align: center; line-height: 1.2;">Looking for Job</button>
+                                </div>
                                 <div class="form-group mb-3">
                                     <label style="font-weight: 600; margin-bottom: 5px; font-size: 13px; display: block;">Full Name *</label>
                                     <input type="text" name="name" class="form-control" placeholder="Enter your name" required style="height: 40px; border-radius: 6px; font-size: 13px; border: 1px solid #ced4da; width: 100%; padding: 8px 12px;">
@@ -144,7 +150,7 @@ include '../includes/header.php';
 
                                 <div class="form-group mb-3">
                                     <label style="font-weight: 600; margin-bottom: 5px; font-size: 13px; display: block;">Brief Work History / Remarks</label>
-                                    <textarea name="message" class="form-control" rows="3" placeholder="Tell us about your previous work experience..." style="border-radius: 6px; font-size: 13px; border: 1px solid #ced4da; width: 100%; padding: 8px 12px;"></textarea>
+                                    <textarea name="message" class="form-control" rows="3" placeholder="What do you actually need? Maid, Nanny, cooks, Driver, etc,etc" style="border-radius: 6px; font-size: 13px; border: 1px solid #ced4da; width: 100%; padding: 8px 12px;"></textarea>
                                 </div>
 
                                 <div class="form-group mb-3" style="display: flex; align-items: flex-start; gap: 8px;">
