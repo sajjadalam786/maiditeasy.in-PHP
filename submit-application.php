@@ -101,13 +101,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
             'Content-Length: ' . strlen($payload)
         ]);
+        curl_exec($ch);
+        curl_close($ch);
+    }
+
+    // 3. Forward to Google Sheets Web App
+    $sheet_url = get_env_var('GOOGLE_SHEET_WEBHOOK_URL', 'https://script.google.com/macros/s/AKfycbyVJrWK6xbv2BONHiob2PJ-ijspDU8pQbgys11LurIjvOaqYaFe4EJJiyPndU-02_KrOw/exec');
+    if (!empty($sheet_url) && filter_var($sheet_url, FILTER_VALIDATE_URL)) {
+        $post_fields = [
+            'name' => $name,
+            'phone' => $phone,
+            'email' => "Alt: $alternate_phone | Age: $age | $gender",
+            'city' => $city,
+            'service' => "Job: $role",
+            'urgency' => "Exp: $experience | Sal: $salary | $work_type",
+            'referrer' => $location,
+            'message' => $message
+        ];
+        
+        $ch = curl_init($sheet_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_fields));
         curl_exec($ch);
         curl_close($ch);
     }

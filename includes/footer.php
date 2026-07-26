@@ -163,6 +163,10 @@
         });
         
         function triggerLeadPopup() {
+            var path = window.location.pathname.toLowerCase();
+            if (path.indexOf("career.php") !== -1 || path.indexOf("thank-you") !== -1 || path.indexOf("book-now-thank-you") !== -1) {
+                return false;
+            }
             if (!sessionStorage.getItem("popupFilled")) {
                 $("#leadPopupModal").css("display", "flex");
             }
