@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Prepare FTP Hostname
         id: prep
@@ -34,8 +36,8 @@ jobs:
           port: ${{ secrets.FTP_PORT || 21 }}
           security: loose
           exclude: |
-            **/.git*
-            **/.git*/**
+            .git*
+            .git*/**
             .env
             *.md
             .agents/**
