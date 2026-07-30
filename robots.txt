@@ -1,5 +1,37 @@
 User-agent: *
 Allow: /
 Disallow: /pages/career.php
+
+# Google Ads & Analytics Bots
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: AdsBot-Google-Mobile
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
+# AI Discovery & Search Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
 Sitemap: https://maiditeasy.in/sitemap.xml
-Sitemap: https://maiditeasy.in/Policies/sitemap.xml

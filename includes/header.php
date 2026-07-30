@@ -115,6 +115,55 @@ $current_page = basename($_SERVER['PHP_SELF']);
             "publisher": {
               "@id": "https://maiditeasy.in/#organization"
             }
+          },
+          {
+            "@type": "ItemList",
+            "@id": "https://maiditeasy.in/#sitelinks",
+            "name": "Maid It Easy Core Services",
+            "itemListElement": [
+              {
+                "@type": "SiteNavigationElement",
+                "position": 1,
+                "name": "Maid Service",
+                "url": "https://maiditeasy.in/services/maid-service.php"
+              },
+              {
+                "@type": "SiteNavigationElement",
+                "position": 2,
+                "name": "Cook Service",
+                "url": "https://maiditeasy.in/services/cook-service.php"
+              },
+              {
+                "@type": "SiteNavigationElement",
+                "position": 3,
+                "name": "Babysitter & Nanny",
+                "url": "https://maiditeasy.in/services/babysitter-nanny-service.php"
+              },
+              {
+                "@type": "SiteNavigationElement",
+                "position": 4,
+                "name": "Elderly Care",
+                "url": "https://maiditeasy.in/services/elderly-care-service.php"
+              },
+              {
+                "@type": "SiteNavigationElement",
+                "position": 5,
+                "name": "Driver Service",
+                "url": "https://maiditeasy.in/services/driver-service.php"
+              },
+              {
+                "@type": "SiteNavigationElement",
+                "position": 6,
+                "name": "Watchman & Security",
+                "url": "https://maiditeasy.in/services/watchman-security-guard-service.php"
+              },
+              {
+                "@type": "SiteNavigationElement",
+                "position": 7,
+                "name": "Contact Us",
+                "url": "https://maiditeasy.in/pages/contact.php"
+              }
+            ]
           }
         ]
       }
