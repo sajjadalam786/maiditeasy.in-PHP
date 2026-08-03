@@ -17,6 +17,11 @@ include 'includes/header.php';
                     <div class="col-12">
                       <div class="tp-slider-wrapper mt-10 position-relative">
                         <div class="tp-slider z-index">
+                          <div class="mb-20" data-animation="fadeInUp" data-delay=".6s">
+                            <a href="pages/contact.php" class="yellow-btn" style="display: inline-flex; align-items: center; gap: 8px; background-image: linear-gradient(to right, #ffd10c 0%, #ff890c 51%, #ffd10c 100%); color: #0e0035 !important; font-weight: 800; font-size: 15px; padding: 12px 28px; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 15px rgba(255,137,12,0.3); text-transform: uppercase;">
+                              <i class="flaticon-enter"></i> BOOK NOW
+                            </a>
+                          </div>
                           <h1 class="tp-slider-title mb-25" data-animation="fadeInUp" data-delay=".8s" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(22px, 5vw, 42px); font-weight: 800; line-height: 1.25; color: #0e0035; max-width: 920px;">
                             Get Verified <span style="color: #ff890c;">Maids, Cooks, Nannies, Caretakers, Drivers</span>, and <span style="color: #ff890c;">Security Guards</span> Sent Right to Your Home.
                           </h1>
