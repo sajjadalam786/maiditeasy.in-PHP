@@ -304,11 +304,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
           padding: 10px 5px;
           text-align: center;
           border-radius: 8px;
-          color: white;
+          color: #0e0035 !important;
           background-image: linear-gradient(to right, #ffd10c 0%, #ff890c 51%, #ffd10c 100%);
           background-size: 200% auto;
           font-size: 16px; /* BIGGER TEXT */
-          font-weight: 600; /* BOLDER TEXT for better visibility */
+          font-weight: 800 !important; /* THICK DARK BOLD BLACK TEXT for maximum contrast & visibility */
           transition: 0.5s;
           display: flex;
           align-items: center;
@@ -320,7 +320,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
       }
       .hero-btn-grid .btn:hover {
           background-position: right center;
-          color: #0e0035; 
+          color: #000000 !important; 
       }
       
       /* STRICT MOBILE RESPONSIVENESS - GUARANTEED TO FIT */
@@ -499,7 +499,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </div>
               </div>   
               <div class="tp-header-btn-three">
-                  <a href="javascript:void(0);" class="yellow-btn book-now-trigger"><i class="flaticon-enter"></i> BOOK NOW</a>
+                  <a href="<?php echo $root_prefix; ?>pages/contact.php" class="yellow-btn"><i class="flaticon-enter"></i> BOOK NOW</a>
               </div>
             </div>
           </div>

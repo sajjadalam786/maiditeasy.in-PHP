@@ -154,7 +154,7 @@ if (file_exists(__DIR__ . '/contact-settings.php')) {
     $(document).ready(function(){
         $(".book-now-trigger").on("click", function(e){
             e.preventDefault();
-            $("#bookingModal").css("display", "flex");
+            window.location.href = "<?php echo $root_prefix; ?>pages/contact.php";
         });
         $(".close-booking-modal, #bookingModal").on("click", function(e){
             if (e.target === this || $(this).hasClass("close-booking-modal")) {
@@ -169,7 +169,7 @@ if (file_exists(__DIR__ . '/contact-settings.php')) {
         
         function triggerLeadPopup() {
             var path = window.location.pathname.toLowerCase();
-            if (path.indexOf("career.php") !== -1 || path.indexOf("thank-you") !== -1 || path.indexOf("book-now-thank-you") !== -1) {
+            if (path.indexOf("career.php") !== -1 || path.indexOf("thank-you") !== -1 || path.indexOf("book-now-thank-you") !== -1 || path.indexOf("contact.php") !== -1) {
                 return false;
             }
             if (!sessionStorage.getItem("popupFilled")) {
@@ -177,19 +177,15 @@ if (file_exists(__DIR__ . '/contact-settings.php')) {
             }
         }
         
-        // Trigger immediately on first visit of session, otherwise 10s delay
+        // Pop up ONLY ONCE per session (no 10s repeat rule)
         if (!sessionStorage.getItem("popupTriggered")) {
             sessionStorage.setItem("popupTriggered", "true");
             triggerLeadPopup();
-        } else {
-            setTimeout(triggerLeadPopup, 10000);
         }
 
         $(".close-lead-popup, #leadPopupModal").on("click", function(e){
             if (e.target === this || $(this).hasClass("close-lead-popup")) {
                 $("#leadPopupModal").css("display", "none");
-                // User closed without filling. Trigger again after 10s to prompt them.
-                setTimeout(triggerLeadPopup, 10000);
             }
         });
 
