@@ -62,7 +62,7 @@ include '../includes/header.php';
                                     </div>
                                     <div class="tp-contact-info-text">
                                         <h4 class="tp-contact-info-title mb-15">Phone</h4>
-                                        <a href="tel:9866769832">+91 98667 69832</a>
+                                        <a href="tel:<?php echo $phone_raw; ?>"><?php echo htmlspecialchars($phone_text); ?></a>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@ include '../includes/header.php';
                                     </div>
                                     <div class="tp-contact-info-text">
                                         <h4 class="tp-contact-info-title mb-15">Email</h4>
-                                        <a href="mailto:maiditeasy21@gmail.com">maiditeasy21@gmail.com</a>
+                                        <a href="mailto:<?php echo $contact_email; ?>"><?php echo htmlspecialchars($contact_email); ?></a>
                                     </div>
                                 </div>
                             </div>
